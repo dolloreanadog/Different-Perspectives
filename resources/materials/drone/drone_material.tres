@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://c464pv56j2sdp"]
+
+[ext_resource type="Texture2D" uid="uid://dj3d263q71j6y" path="res://assets/textures/drone_texture.png" id="1_lldbg"]
+
+[resource]
+albedo_texture = ExtResource("1_lldbg")
+metallic = 1.0

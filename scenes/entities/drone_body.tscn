@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://de23fqn3k068w"]
+
+[ext_resource type="PackedScene" uid="uid://beb3r4sh0jrx2" path="res://assets/models/drone.glb" id="1_xm3as"]
+[ext_resource type="Texture2D" uid="uid://dj3d263q71j6y" path="res://assets/textures/drone_texture.png" id="2_hmbqr"]
+[ext_resource type="Material" uid="uid://c464pv56j2sdp" path="res://resources/materials/drone/drone_material.tres" id="3_uf2y5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7d4xc"]
+albedo_texture = ExtResource("2_hmbqr")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wsj1m"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 1.52
+
+[node name="drone" unique_id=986905730 instance=ExtResource("1_xm3as")]
+
+[node name="Skeleton3D" parent="Armature_001" parent_id_path=PackedInt32Array(414657065) index="0" unique_id=592822892]
+bones/1/rotation = Quaternion(4.829328e-09, -2.5893095e-33, -2.5893095e-33, 1)
+bones/2/position = Vector3(5.3539553e-17, -0.9060813, -0.89539963)
+bones/2/rotation = Quaternion(-6.808288e-08, 2.220446e-16, 2.2204459e-16, 1)
+bones/3/position = Vector3(-1.1835388, -0.90608144, 0.03043317)
+bones/3/rotation = Quaternion(-7.2869966e-08, 8.989618e-32, 3.517982e-32, 1)
+bones/4/rotation = Quaternion(-6.808288e-08, -6.408463e-32, -3.6032534e-32, 1)
+bones/5/position = Vector3(1.1549048, -0.90608144, 0.0017990398)
+bones/5/rotation = Quaternion(-7.293646e-08, 8.9259847e-32, 3.476347e-32, 1)
+
+[node name="Bone_002" parent="Armature_001/Skeleton3D" index="0" unique_id=560799949]
+transform = Transform3D(0.9999998, -4.4408913e-16, 4.440891e-16, 4.4408908e-16, 0.9999998, 1.2650708e-07, -4.4408916e-16, -1.2650708e-07, 0.9999998, 3.2229363e-16, 0.2370857, -0.89539945)
+
+[node name="Cube_005" parent="Armature_001/Skeleton3D/Bone_002" index="0" unique_id=2120451353]
+surface_material_override/0 = SubResource("StandardMaterial3D_7d4xc")
+
+[node name="Bone_003" parent="Armature_001/Skeleton3D" index="1" unique_id=719383079]
+transform = Transform3D(0.9999998, 3.292493e-31, 5.690441e-31, -3.2924936e-31, 0.9999998, 1.3608124e-07, -5.6904407e-31, -1.3608124e-07, 0.9999998, -1.1835387, 0.23708558, 0.030433234)
+
+[node name="Cube_004" parent="Armature_001/Skeleton3D/Bone_003" index="0" unique_id=642168180]
+surface_material_override/0 = SubResource("StandardMaterial3D_7d4xc")
+
+[node name="Bone_004" parent="Armature_001/Skeleton3D" index="2" unique_id=577796674]
+transform = Transform3D(0.9999998, 4.7167397e-31, 2.6108259e-31, -4.71674e-31, 0.9999998, 1.2650708e-07, -2.6108251e-31, -1.2650708e-07, 0.9999998, 0.00954461, 0.23708552, 1.1567038)
+
+[node name="Cube_003" parent="Armature_001/Skeleton3D/Bone_004" index="0" unique_id=388040975]
+surface_material_override/0 = SubResource("StandardMaterial3D_7d4xc")
+
+[node name="Bone_005" parent="Armature_001/Skeleton3D" index="3" unique_id=188343105]
+transform = Transform3D(0.9999998, 3.3008199e-31, 5.677715e-31, -3.3008206e-31, 0.9999998, 1.3621423e-07, -5.6777144e-31, -1.3621423e-07, 0.9999998, 1.1549047, 0.23708558, 0.0017991065)
+
+[node name="Cube_002" parent="Armature_001/Skeleton3D/Bone_005" index="0" unique_id=72963943]
+surface_material_override/0 = SubResource("StandardMaterial3D_7d4xc")
+
+[node name="Cube" parent="Armature_001/Skeleton3D/Bone" parent_id_path=PackedInt32Array(1127611412) index="0" unique_id=599852023]
+material_override = ExtResource("3_uf2y5")
+surface_material_override/0 = SubResource("StandardMaterial3D_7d4xc")
+
+[node name="Cube_001" parent="Armature_001/Skeleton3D/Bone" parent_id_path=PackedInt32Array(1127611412) index="1" unique_id=2001250405]
+surface_material_override/0 = SubResource("StandardMaterial3D_7d4xc")
+
+[node name="Cylinder" parent="Armature_001/Skeleton3D/Bone" parent_id_path=PackedInt32Array(1127611412) index="2" unique_id=328426572]
+surface_material_override/0 = SubResource("StandardMaterial3D_7d4xc")
+
+[node name="Sphere" parent="Armature_001/Skeleton3D/Bone" parent_id_path=PackedInt32Array(1127611412) index="3" unique_id=1642169828]
+surface_material_override/0 = SubResource("StandardMaterial3D_wsj1m")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="." index="2" unique_id=1103339204]
+transform = Transform3D(1, 0, 0, 0, -1, -8.742278e-08, 0, 8.742278e-08, -1, 0, 0, 0.1890248)

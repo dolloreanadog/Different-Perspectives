@@ -1,0 +1,169 @@
+[gd_scene format=3 uid="uid://cmspe65yj5t6q"]
+
+[ext_resource type="Script" uid="uid://21cbqbixuik3" path="res://components/player_controller/player_controller.gd" id="1_opoyq"]
+[ext_resource type="Texture2D" uid="uid://bpnliuxkwub06" path="res://assets/textures/white_grid.png" id="2_l4ht0"]
+[ext_resource type="Material" uid="uid://bbap35vkl2kcg" path="res://resources/materials/ground_grid.tres" id="3_7rbyl"]
+[ext_resource type="PackedScene" uid="uid://de23fqn3k068w" path="res://scenes/entities/drone_body.tscn" id="4_hwjx1"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_7rbyl"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("AnimationTree:parameters/walking_direction_blend_space/blend_position")
+properties/2/spawn = true
+properties/2/replication_mode = 2
+properties/3/path = NodePath("Head:rotation:x")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_opoyq"]
+radius = 0.3
+height = 1.8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7rbyl"]
+albedo_texture = ExtResource("2_l4ht0")
+
+[sub_resource type="BoxMesh" id="BoxMesh_l4ht0"]
+size = Vector3(0.3, 0.15, 0.2)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ek20b"]
+radius = 0.2836914
+height = 0.5673828
+
+[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_opoyq"]
+
+[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_l4ht0"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hwjx1"]
+animation = &"damaged"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gsftu"]
+animation = &"grabbing"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_riij3"]
+animation = &"dead"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_w7npb"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_b6yx8"]
+animation = &"right"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jthoo"]
+animation = &"left"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_gy805"]
+blend_mode = 1
+blend_point_0/node = SubResource("AnimationNodeAnimation_w7npb")
+blend_point_0/pos = 0.0
+blend_point_0/name = &"Idle"
+blend_point_1/node = SubResource("AnimationNodeAnimation_b6yx8")
+blend_point_1/pos = 1.0
+blend_point_1/name = &"right"
+blend_point_2/node = SubResource("AnimationNodeAnimation_jthoo")
+blend_point_2/pos = -1.0
+blend_point_2/name = &"left"
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_wrtqu"]
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_gsftu"]
+
+[sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_hwjx1"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_btpay"]
+nodes/output/position = Vector2(900, 180)
+nodes/BlendSpace1D/node = SubResource("AnimationNodeBlendSpace1D_gy805")
+nodes/BlendSpace1D/position = Vector2(-400, 180)
+nodes/DamagedOneShot/node = SubResource("AnimationNodeOneShot_wrtqu")
+nodes/DamagedOneShot/position = Vector2(-140, 240)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_riij3")
+nodes/Animation/position = Vector2(480, 340)
+nodes/DeathBlend/node = SubResource("AnimationNodeBlend2_gsftu")
+nodes/DeathBlend/position = Vector2(660, 220)
+"nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_hwjx1")
+"nodes/Animation 2/position" = Vector2(-380, 400)
+nodes/GrabAdd/node = SubResource("AnimationNodeAdd2_hwjx1")
+nodes/GrabAdd/position = Vector2(280, 260)
+"nodes/Animation 3/node" = SubResource("AnimationNodeAnimation_gsftu")
+"nodes/Animation 3/position" = Vector2(60, 460)
+node_connections = [&"output", 0, &"DeathBlend", &"DamagedOneShot", 0, &"BlendSpace1D", &"DamagedOneShot", 1, &"Animation 2", &"DeathBlend", 0, &"GrabAdd", &"DeathBlend", 1, &"Animation", &"GrabAdd", 0, &"DamagedOneShot", &"GrabAdd", 1, &"Animation 3"]
+
+[node name="PlayerController" type="CharacterBody3D" unique_id=173259361]
+collision_layer = 2
+script = ExtResource("1_opoyq")
+has_loopback = true
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=177390128]
+replication_config = SubResource("SceneReplicationConfig_7rbyl")
+
+[node name="WorldModel" type="Node3D" parent="." unique_id=1935681308]
+unique_name_in_owner = true
+
+[node name="Capsule" type="MeshInstance3D" parent="WorldModel" unique_id=135518582]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+visible = false
+mesh = SubResource("CapsuleMesh_opoyq")
+surface_material_override/0 = SubResource("StandardMaterial3D_7rbyl")
+
+[node name="Headset" type="MeshInstance3D" parent="WorldModel/Capsule" unique_id=1133556626]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -0.3)
+mesh = SubResource("BoxMesh_l4ht0")
+surface_material_override/0 = ExtResource("3_7rbyl")
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=699720928]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0009764433, 0)
+shape = SubResource("CapsuleShape3D_ek20b")
+
+[node name="Head" type="Node3D" parent="." unique_id=227806673]
+unique_name_in_owner = true
+
+[node name="Camera" type="Camera3D" parent="Head" unique_id=965463557]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.21856135)
+cull_mask = 524287
+
+[node name="AudioListener" type="AudioListener3D" parent="Head/Camera" unique_id=855418785]
+unique_name_in_owner = true
+
+[node name="drone" parent="Head" unique_id=986905730 instance=ExtResource("4_hwjx1")]
+transform = Transform3D(1, 0, 0, 0, -1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0)
+
+[node name="Skeleton3D" parent="Head/drone/Armature_001" parent_id_path=PackedInt32Array(986905730, 414657065) index="0" unique_id=592822892]
+bones/1/rotation = Quaternion(2.8390428e-09, -0.8089528, -6.9422825e-08, 0.5878737)
+
+[node name="Bone_002" parent="Head/drone/Armature_001/Skeleton3D" index="0" unique_id=560799949]
+transform = Transform3D(-0.30880895, 2.0654088e-07, -0.95112383, -8.621698e-08, 0.9999998, 2.451473e-07, 0.95112383, 1.5770675e-07, -0.30880895, 0.85163593, 0.23708558, 0.2765074)
+
+[node name="Bone_003" parent="Head/drone/Armature_001/Skeleton3D" index="1" unique_id=719383079]
+transform = Transform3D(-0.30880895, 2.1564708e-07, -0.95112383, -8.621698e-08, 0.9999998, 2.5472144e-07, 0.95112383, 1.6066333e-07, -0.30880895, 0.33654162, 0.2370857, -1.13509)
+
+[node name="Bone_004" parent="Head/drone/Armature_001/Skeleton3D" index="2" unique_id=577796674]
+transform = Transform3D(-0.30880895, 2.0654088e-07, -0.95112383, -8.621698e-08, 0.9999998, 2.451473e-07, 0.95112383, 1.5770675e-07, -0.30880895, -1.1031163, 0.23708564, -0.34812245)
+
+[node name="Bone_005" parent="Head/drone/Armature_001/Skeleton3D" index="3" unique_id=188343105]
+transform = Transform3D(-0.30880895, 2.1577358e-07, -0.95112383, -8.621698e-08, 0.9999998, 2.5485446e-07, 0.95112383, 1.607044e-07, -0.30880895, -0.35835615, 0.23708546, 1.097902)
+
+[node name="ProxNetwork" type="AudioStreamPlayer3D" parent="." unique_id=305826201]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamGenerator_opoyq")
+
+[node name="ProxLocal" type="AudioStreamPlayer3D" parent="." unique_id=735946454]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamGenerator_l4ht0")
+
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=348234559]
+unique_name_in_owner = true
+root_node = NodePath("%Head/drone")
+tree_root = SubResource("AnimationNodeBlendTree_btpay")
+anim_player = NodePath("../Head/drone/AnimationPlayer")
+parameters/BlendSpace1D/blend_position = -1.0016502
+parameters/DamagedOneShot/active = false
+parameters/DamagedOneShot/internal_active = false
+parameters/DamagedOneShot/request = 0
+parameters/DeathBlend/blend_amount = 0.0
+parameters/GrabAdd/add_amount = 0.0
+
+[editable path="Head/drone"]

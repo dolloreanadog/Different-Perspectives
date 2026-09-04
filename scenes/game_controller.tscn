@@ -1,0 +1,272 @@
+[gd_scene format=3 uid="uid://dctiktpqyar4l"]
+
+[ext_resource type="Script" uid="uid://bqrnoubyb5xyt" path="res://components/managers/lobby_manager.gd" id="1_rc0pn"]
+[ext_resource type="Script" uid="uid://djqwyk1iv2mw3" path="res://components/managers/network_manager.gd" id="2_h843c"]
+[ext_resource type="Script" uid="uid://dnirqbsrgss6i" path="res://components/managers/menu_manager.gd" id="3_e85df"]
+[ext_resource type="Script" uid="uid://busevdy2omq1l" path="res://components/managers/map_manager.gd" id="4_burlk"]
+[ext_resource type="PackedScene" uid="uid://cl3jbmjvdq0xr" path="res://scenes/levels/lobby.tscn" id="5_e85df"]
+[ext_resource type="PackedScene" uid="uid://c0hrn5pe2ti1e" path="res://scenes/levels/main_menu.tscn" id="5_h843c"]
+[ext_resource type="PackedScene" uid="uid://besrfb02v4ttt" path="res://scenes/ui/server.tscn" id="6_burlk"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_e85df"]
+font_color = Color(1, 0.172498, 0.208016, 1)
+
+[node name="GameController" type="Node" unique_id=1060063700]
+
+[node name="LobbyManager" type="Node" parent="." unique_id=615157697 node_paths=PackedStringArray("network_manager", "map_spawner", "map_manager", "menu_manager", "lobby_v_box_container")]
+script = ExtResource("1_rc0pn")
+network_manager = NodePath("../NetworkManager")
+map_spawner = NodePath("../MapSpawner")
+map_manager = NodePath("../MapManager")
+menu_manager = NodePath("../MenuManager")
+lobby_v_box_container = NodePath("../CanvasLayer/Control/PublicMultiplayerMenu/Panel/ScrollContainer/MarginContainer/VBoxContainer")
+metadata/_custom_type_script = "uid://bqrnoubyb5xyt"
+
+[node name="NetworkManager" type="Node" parent="." unique_id=2125101028]
+script = ExtResource("2_h843c")
+metadata/_custom_type_script = "uid://djqwyk1iv2mw3"
+
+[node name="MenuManager" type="Node" parent="." unique_id=463438773 node_paths=PackedStringArray("main_canvas", "main_menu", "multiplayer_select_menu", "local_multiplayer_menu", "public_multiplayer_menu", "mic_select", "restart_prompt", "lobby_manager", "network_manager")]
+script = ExtResource("3_e85df")
+server_panel = ExtResource("6_burlk")
+main_canvas = NodePath("../CanvasLayer")
+main_menu = NodePath("../CanvasLayer/Control/MainMenu")
+multiplayer_select_menu = NodePath("../CanvasLayer/Control/MultiplayerSelectMenu")
+local_multiplayer_menu = NodePath("../CanvasLayer/Control/LocalMultiplayerMenu")
+public_multiplayer_menu = NodePath("../CanvasLayer/Control/PublicMultiplayerMenu")
+mic_select = NodePath("../CanvasLayer/Control/MainMenu/VBoxContainer/SelectMic")
+restart_prompt = NodePath("../CanvasLayer/Control/MainMenu/Restart Prompt")
+lobby_manager = NodePath("../LobbyManager")
+network_manager = NodePath("../NetworkManager")
+metadata/_custom_type_script = "uid://dnirqbsrgss6i"
+
+[node name="MapManager" type="Node" parent="." unique_id=826922196 node_paths=PackedStringArray("menu_scene")]
+script = ExtResource("4_burlk")
+menu_scene = NodePath("../MapContainer/MainMenu")
+lobby_map = ExtResource("5_e85df")
+lobby_scene_path = "res://scenes/levels/lobby.tscn"
+metadata/_custom_type_script = "uid://busevdy2omq1l"
+
+[node name="MapSpawner" type="MultiplayerSpawner" parent="." unique_id=1995891200]
+spawn_path = NodePath("../MapContainer")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1806022422]
+
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=943976032]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainMenu" type="Control" parent="CanvasLayer/Control" unique_id=1388260219]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/MainMenu" unique_id=1250054844]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 160.0
+offset_top = -62.5
+offset_right = 310.0
+offset_bottom = 62.5
+grow_vertical = 2
+alignment = 1
+
+[node name="SingleplayerButton" type="Button" parent="CanvasLayer/Control/MainMenu/VBoxContainer" unique_id=899026774]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Singleplayer"
+
+[node name="MultiplayerButton" type="Button" parent="CanvasLayer/Control/MainMenu/VBoxContainer" unique_id=776606596]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Multiplayer"
+
+[node name="SelectMic" type="OptionButton" parent="CanvasLayer/Control/MainMenu/VBoxContainer" unique_id=1988667360]
+layout_mode = 2
+
+[node name="QuitButton" type="Button" parent="CanvasLayer/Control/MainMenu/VBoxContainer" unique_id=482721531]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Quit"
+
+[node name="Restart Prompt" type="Label" parent="CanvasLayer/Control/MainMenu" unique_id=635524390]
+visible = false
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = -47.0
+offset_right = 264.0
+offset_bottom = -24.0
+grow_vertical = 0
+text = "Restart the Game! (see console)"
+label_settings = SubResource("LabelSettings_e85df")
+
+[node name="MultiplayerSelectMenu" type="Control" parent="CanvasLayer/Control" unique_id=748861850]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/MultiplayerSelectMenu" unique_id=1039462261]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 192.0
+offset_top = -20.0
+offset_right = 232.0
+offset_bottom = 20.0
+grow_vertical = 2
+
+[node name="PublicMultiplayerButton" type="Button" parent="CanvasLayer/Control/MultiplayerSelectMenu/VBoxContainer" unique_id=1803796302]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Public"
+
+[node name="LocalMultiplayerButton" type="Button" parent="CanvasLayer/Control/MultiplayerSelectMenu/VBoxContainer" unique_id=1450289386]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Local"
+
+[node name="BackToMainMenu" type="Button" parent="CanvasLayer/Control/MultiplayerSelectMenu/VBoxContainer" unique_id=1163480519]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Back"
+
+[node name="LocalMultiplayerMenu" type="Control" parent="CanvasLayer/Control" unique_id=1521173635]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/LocalMultiplayerMenu" unique_id=2133330078]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 192.0
+offset_top = -20.0
+offset_right = 232.0
+offset_bottom = 20.0
+grow_vertical = 2
+
+[node name="HostButton" type="Button" parent="CanvasLayer/Control/LocalMultiplayerMenu/VBoxContainer" unique_id=2018299225]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Host"
+
+[node name="JoinButton" type="Button" parent="CanvasLayer/Control/LocalMultiplayerMenu/VBoxContainer" unique_id=1770255018]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Join"
+
+[node name="BackToMainMenu" type="Button" parent="CanvasLayer/Control/LocalMultiplayerMenu/VBoxContainer" unique_id=430619300]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Back"
+
+[node name="PublicMultiplayerMenu" type="Control" parent="CanvasLayer/Control" unique_id=972068127]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/PublicMultiplayerMenu" unique_id=1956318205]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 192.0
+offset_top = -20.0
+offset_right = 232.0
+offset_bottom = 20.0
+grow_vertical = 2
+
+[node name="HostButton" type="Button" parent="CanvasLayer/Control/PublicMultiplayerMenu/VBoxContainer" unique_id=1544331294]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Host"
+
+[node name="RefreshButton" type="Button" parent="CanvasLayer/Control/PublicMultiplayerMenu/VBoxContainer" unique_id=1919457399]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Refresh"
+
+[node name="BackToMainMenu" type="Button" parent="CanvasLayer/Control/PublicMultiplayerMenu/VBoxContainer" unique_id=1795733481]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Back"
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Control/PublicMultiplayerMenu" unique_id=480351033]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -476.0
+offset_top = -184.0
+offset_right = -116.0
+offset_bottom = 184.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Control/PublicMultiplayerMenu/Panel" unique_id=1960995022]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/PublicMultiplayerMenu/Panel/ScrollContainer" unique_id=1601332189]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/PublicMultiplayerMenu/Panel/ScrollContainer/MarginContainer" unique_id=1927322161]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MapContainer" type="Node" parent="." unique_id=1804631234]
+
+[node name="MainMenu" parent="MapContainer" unique_id=1605577905 instance=ExtResource("5_h843c")]
+
+[connection signal="pressed" from="CanvasLayer/Control/MainMenu/VBoxContainer/SingleplayerButton" to="MenuManager" method="_on_singleplayer_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/MainMenu/VBoxContainer/MultiplayerButton" to="MenuManager" method="_on_multiplayer_button_pressed"]
+[connection signal="item_selected" from="CanvasLayer/Control/MainMenu/VBoxContainer/SelectMic" to="MenuManager" method="_on_mic_select"]
+[connection signal="pressed" from="CanvasLayer/Control/MainMenu/VBoxContainer/QuitButton" to="MenuManager" method="_on_quit_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/MultiplayerSelectMenu/VBoxContainer/PublicMultiplayerButton" to="MenuManager" method="_on_public_multiplayer_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/MultiplayerSelectMenu/VBoxContainer/LocalMultiplayerButton" to="MenuManager" method="_on_local_multiplayer_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/MultiplayerSelectMenu/VBoxContainer/BackToMainMenu" to="MenuManager" method="_on_back_to_main_menu_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/LocalMultiplayerMenu/VBoxContainer/HostButton" to="MenuManager" method="_on_local_host_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/LocalMultiplayerMenu/VBoxContainer/JoinButton" to="MenuManager" method="_on_local_join_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/LocalMultiplayerMenu/VBoxContainer/BackToMainMenu" to="MenuManager" method="_on_back_to_menu_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/PublicMultiplayerMenu/VBoxContainer/HostButton" to="MenuManager" method="_on_public_host_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/PublicMultiplayerMenu/VBoxContainer/RefreshButton" to="MenuManager" method="_on_refresh_lobby_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/PublicMultiplayerMenu/VBoxContainer/BackToMainMenu" to="MenuManager" method="_on_back_to_menu_button_pressed"]
