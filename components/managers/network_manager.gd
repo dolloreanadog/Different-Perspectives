@@ -1,12 +1,14 @@
 class_name NetworkManager extends Node
 
-var peer
-
 enum PeerMode {
 	STEAM,
 	LOCAL,
 	NONE
 }
+
+
+
+var peer
 
 func get_peer():
 	return peer

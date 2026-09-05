@@ -12,12 +12,9 @@ properties/0/replication_mode = 1
 properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
-properties/2/path = NodePath("AnimationTree:parameters/walking_direction_blend_space/blend_position")
+properties/2/path = NodePath("Head:rotation:x")
 properties/2/spawn = true
-properties/2/replication_mode = 2
-properties/3/path = NodePath("Head:rotation:x")
-properties/3/spawn = true
-properties/3/replication_mode = 1
+properties/2/replication_mode = 1
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_opoyq"]
 radius = 0.3
@@ -56,7 +53,8 @@ animation = &"right"
 animation = &"left"
 
 [sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_gy805"]
-blend_mode = 1
+snap = 1.0
+blend_mode = 2
 blend_point_0/node = SubResource("AnimationNodeAnimation_w7npb")
 blend_point_0/pos = 0.0
 blend_point_0/name = &"Idle"
@@ -74,6 +72,7 @@ blend_point_2/name = &"left"
 [sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_hwjx1"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_btpay"]
+graph_offset = Vector2(-615.59094, 53.330093)
 nodes/output/position = Vector2(900, 180)
 nodes/BlendSpace1D/node = SubResource("AnimationNodeBlendSpace1D_gy805")
 nodes/BlendSpace1D/position = Vector2(-400, 180)
@@ -94,6 +93,8 @@ node_connections = [&"output", 0, &"DeathBlend", &"DamagedOneShot", 0, &"BlendSp
 [node name="PlayerController" type="CharacterBody3D" unique_id=173259361]
 collision_layer = 2
 script = ExtResource("1_opoyq")
+acceleration = 2.0
+vertical_decay = 7.5
 has_loopback = true
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=177390128]
@@ -132,19 +133,19 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, -1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0)
 
 [node name="Skeleton3D" parent="Head/drone/Armature_001" parent_id_path=PackedInt32Array(986905730, 414657065) index="0" unique_id=592822892]
-bones/1/rotation = Quaternion(2.8390428e-09, -0.8089528, -6.9422825e-08, 0.5878737)
+bones/1/rotation = Quaternion(4.18395e-09, 0.4994145, 4.285882e-08, 0.8663633)
 
 [node name="Bone_002" parent="Head/drone/Armature_001/Skeleton3D" index="0" unique_id=560799949]
-transform = Transform3D(-0.30880895, 2.0654088e-07, -0.95112383, -8.621698e-08, 0.9999998, 2.451473e-07, 0.95112383, 1.5770675e-07, -0.30880895, 0.85163593, 0.23708558, 0.2765074)
+transform = Transform3D(0.5011702, -1.8791437e-07, 0.8653485, 7.844164e-08, 0.9999998, 1.7172471e-07, -0.8653485, -1.8183968e-08, 0.5011702, -0.7748327, 0.23708564, -0.44874766)
 
 [node name="Bone_003" parent="Head/drone/Armature_001/Skeleton3D" index="1" unique_id=719383079]
-transform = Transform3D(-0.30880895, 2.1564708e-07, -0.95112383, -8.621698e-08, 0.9999998, 2.5472144e-07, 0.95112383, 1.6066333e-07, -0.30880895, 0.33654162, 0.2370857, -1.13509)
+transform = Transform3D(0.5011702, -1.9619938e-07, 0.8653485, 7.844164e-08, 0.9999998, 1.8129887e-07, -0.8653485, -2.2982256e-08, 0.5011702, -0.56681913, 0.23708546, 1.039426)
 
 [node name="Bone_004" parent="Head/drone/Armature_001/Skeleton3D" index="2" unique_id=577796674]
-transform = Transform3D(-0.30880895, 2.0654088e-07, -0.95112383, -8.621698e-08, 0.9999998, 2.451473e-07, 0.95112383, 1.5770675e-07, -0.30880895, -1.1031163, 0.23708564, -0.34812245)
+transform = Transform3D(0.5011702, -1.8791437e-07, 0.8653485, 7.844164e-08, 0.9999998, 1.7172471e-07, -0.8653485, -1.8183968e-08, 0.5011702, 1.0057355, 0.23708558, 0.5714462)
 
 [node name="Bone_005" parent="Head/drone/Armature_001/Skeleton3D" index="3" unique_id=188343105]
-transform = Transform3D(-0.30880895, 2.1577358e-07, -0.95112383, -8.621698e-08, 0.9999998, 2.5485446e-07, 0.95112383, 1.607044e-07, -0.30880895, -0.35835615, 0.23708546, 1.097902)
+transform = Transform3D(0.5011702, -1.9631446e-07, 0.8653485, 7.844164e-08, 0.9999998, 1.8143186e-07, -0.8653485, -2.3048905e-08, 0.5011702, 0.58036083, 0.2370857, -0.9984936)
 
 [node name="ProxNetwork" type="AudioStreamPlayer3D" parent="." unique_id=305826201]
 unique_name_in_owner = true
@@ -159,7 +160,7 @@ unique_name_in_owner = true
 root_node = NodePath("%Head/drone")
 tree_root = SubResource("AnimationNodeBlendTree_btpay")
 anim_player = NodePath("../Head/drone/AnimationPlayer")
-parameters/BlendSpace1D/blend_position = -1.0016502
+parameters/BlendSpace1D/blend_position = -0.9950495
 parameters/DamagedOneShot/active = false
 parameters/DamagedOneShot/internal_active = false
 parameters/DamagedOneShot/request = 0

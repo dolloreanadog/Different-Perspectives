@@ -12,6 +12,11 @@ class_name PlayerController extends CharacterBody3D
 @export var acceleration: float = 15.0
 @export var jump_velocity: float = 4.0
 
+## The higher it is the fast it decays, the lower it is the slower it decays
+@export var horizontal_decay: float = 1.0
+## The higher it is the fast it decays, the lower it is the slower it decays
+@export var vertical_decay: float = 1.0
+
 @export_category("Camera")
 @export var camera_sensitivity: float = 0.1
 
@@ -19,7 +24,8 @@ class_name PlayerController extends CharacterBody3D
 @export var has_loopback: bool = false
 @export var max_distance: float = 30.0
 
-var input_dir: Vector2 = Vector2.ZERO
+var horizontal_input_dir: Vector2 = Vector2.ZERO
+var vertical_input_dir: float
 var input_smoothed: Vector2 = Vector2.ZERO
 var direction: Vector3 = Vector3.ZERO
 
@@ -34,6 +40,19 @@ var packet_read_limit: int = 5
 
 var player_name: String = "Larry"
 var steam_id: int = 0
+
+var player_type_selected: PlayerType:
+	set(value):
+		player_type_selected = value
+		got_player_type.emit()
+
+enum PlayerType {
+	PLAYER1, 
+	PLAYER2,
+	PLAYER3
+	}
+
+signal got_player_type()
 
 func _ready() -> void:
 	Global.player = self
@@ -90,32 +109,41 @@ func _input(_event: InputEvent) -> void:
 func get_speed() -> float:
 	return move_speed
 
-func handle_movement(delta: float) -> void:
-	direction = lerp(direction, (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized(), delta * acceleration)
+func handle_horizontal_movement(delta: float) -> void:
+	direction = lerp(direction, (transform.basis * Vector3(horizontal_input_dir.x, vertical_input_dir, horizontal_input_dir.y)).normalized(), delta * acceleration)
 	if direction:
-		velocity.x = direction.x * get_speed()
-		velocity.z = direction.z * get_speed()
+		velocity.x = direction.x * move_speed
+		velocity.z = direction.z * move_speed
+		velocity.y = direction.y * move_speed
 	else:
-		velocity.x = move_toward(velocity.x, 0, get_speed())
-		velocity.z = move_toward(velocity.z, 0, get_speed())
-
-func handle_gravity(delta: float) -> void:
-	velocity += get_gravity() * delta
+		velocity.x = move_toward(velocity.x, 0, delta * horizontal_decay)
+		velocity.z = move_toward(velocity.z, 0, delta * horizontal_decay)
+		velocity.y = move_toward(velocity.y, 0, delta * horizontal_decay)
+	
+	
+func handle_vertical_movement(delta: float) -> void:
+	
+	velocity.y = move_toward(velocity.y, 0, delta * vertical_decay)
+	#velocity += get_gravity() * delta
 
 func _physics_process(delta: float) -> void:
 	if !is_multiplayer_authority(): return
 
-	input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
-	input_smoothed = lerp(input_smoothed, input_dir, delta * 10.0)
+	horizontal_input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
+	
+	vertical_input_dir = 0
+	if Input.is_action_pressed("up"):
+		vertical_input_dir = 1
+	if Input.is_action_pressed("down"):
+		vertical_input_dir = -1
+	
+	# Should probably do the animation for drone
+	input_smoothed = lerp(input_smoothed, horizontal_input_dir, delta * 10.0)
 	animation_tree.set("parameters/walking_direction_blend_space/blend_position", input_smoothed)
-
-	if Input.is_action_just_pressed("up"):
-		velocity.y = jump_velocity
-	if Input.is_action_just_pressed("down"):
-		velocity.y = -jump_velocity
 	
-	handle_movement(delta)
 	
+	handle_horizontal_movement(delta)
+	#handle_vertical_movement(delta)
 	#if is_on_floor():
 		#
 			#
@@ -169,7 +197,7 @@ func record_voice(is_recording: bool) -> void:
 	else:
 		Steam.stopVoiceRecording()
 
-func check_for_voice() -> void:
+func check_for_voice() -> void: # If error happens, we were in local multiplayer and not steam
 	var available_voice: Dictionary = Steam.getAvailableVoice()
 	if available_voice['result'] == Steam.VOICE_RESULT_OK and available_voice['buffer'] > 0:
 		var voice_data: Dictionary = Steam.getVoice()
