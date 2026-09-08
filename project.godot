@@ -39,6 +39,14 @@ window/stretch/mode="canvas_items"
 
 project/assembly_name="multiplayer-template"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/yard/plugin.cfg")
+
+[global_group]
+
+players=""
+
 [input]
 
 move_forward={
@@ -82,3 +90,7 @@ voice={
 3d_render/layer_20="Hidden"
 3d_physics/layer_1="main"
 3d_physics/layer_2="player"
+
+[steam]
+
+initialization/app_data/app_id=5226190

@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://cuc3wf8opcg7e"]
+
+[ext_resource type="PackedScene" uid="uid://bpf3qt3tvy6lr" path="res://scenes/ui/level_button.tscn" id="1_8yhjr"]
+
+[node name="StartingUI" type="Control" unique_id=159579889]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="LobbyPanel" type="Panel" parent="." unique_id=1459441985]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="ExitButton" type="Button" parent="LobbyPanel" unique_id=469746603]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 128.0
+offset_bottom = 64.0
+text = "Exit"
+
+[node name="PlayerListContainer" type="VBoxContainer" parent="LobbyPanel" unique_id=96204181]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 80.0
+offset_right = 320.0
+offset_bottom = 632.0
+
+[node name="Button" type="Button" parent="LobbyPanel" unique_id=239419800]
+layout_mode = 0
+offset_left = 960.0
+offset_top = 536.0
+offset_right = 1088.0
+offset_bottom = 576.0
+text = "Choose Level"
+
+[node name="LevelSelectPanel" type="Panel" parent="." unique_id=202786321]
+layout_mode = 0
+offset_left = 1152.0
+offset_right = 2304.0
+offset_bottom = 648.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="LevelSelectPanel" unique_id=720398720]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 1088.0
+offset_bottom = 576.0
+
+[node name="LevelGridContainer" type="GridContainer" parent="LevelSelectPanel/ScrollContainer" unique_id=131036827]
+unique_name_in_owner = true
+layout_mode = 2
+columns = 8
+
+[node name="LevelButton" parent="." unique_id=888527585 instance=ExtResource("1_8yhjr")]
+layout_mode = 0

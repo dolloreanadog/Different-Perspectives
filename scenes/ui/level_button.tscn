@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://bpf3qt3tvy6lr"]
+
+[ext_resource type="Script" uid="uid://cjf3ibnngsmq3" path="res://components/ui/level_button.gd" id="1_d4lgq"]
+
+[node name="LevelButton" type="Button" unique_id=888527585]
+offset_left = 1216.0
+offset_top = 64.0
+offset_right = 1280.0
+offset_bottom = 128.0
+text = "1"
+script = ExtResource("1_d4lgq")

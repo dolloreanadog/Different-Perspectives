@@ -15,7 +15,7 @@ var local_lobby_id = 1
 @export_group("Steam Lobby")
 var steam_lobby_id = 1
 @export var lobby_v_box_container: VBoxContainer
-@export var steam_local_max_players: int = 4
+@export var steam_local_max_players: int = 3
 
 ## INFO: Signals
 signal on_singleplayer_lobby_created
@@ -70,7 +70,7 @@ func setup_local_lobbies():
 
 func setup_steam_lobbies():
 	network_manager.set_peer_mode(network_manager.PeerMode.STEAM)
-	network_manager.get_peer().lobby_created.connect(_on_steam_lobby_created)
+	Steam.lobby_created.connect(_on_steam_lobby_created)
 	Steam.lobby_match_list.connect(_on_steam_lobby_match_list)
 	open_steam_lobby_list()
 #endregion
@@ -92,7 +92,7 @@ func create_local_lobby():
 func create_steam_lobby():
 	# If not in a Steam lobby, create a Steam lobby and spawn the lobby scene.
 	if SteamManager.lobby_id == 0:
-		network_manager.get_peer().create_lobby(Steam.LobbyType.LOBBY_TYPE_PUBLIC, SteamManager.lobby_members_max)
+		Steam.createLobby(Steam.LobbyType.LOBBY_TYPE_PUBLIC, SteamManager.lobby_members_max)
 		network_manager.update_multiplayer_peer()
 		map_spawner.spawn(map_manager.lobby_scene_path)
 		on_steam_lobby_created.emit()

@@ -3,6 +3,9 @@
 [ext_resource type="Material" uid="uid://bbap35vkl2kcg" path="res://resources/materials/ground_grid.tres" id="1_c13em"]
 [ext_resource type="Script" uid="uid://bimu02ie64wib" path="res://components/managers/player_spawner.gd" id="1_kr2ft"]
 [ext_resource type="PackedScene" uid="uid://cmspe65yj5t6q" path="res://scenes/entities/player_controller.tscn" id="2_l7pl7"]
+[ext_resource type="Script" uid="uid://b84358h0vp523" path="res://components/object/map_objects/lobby/change_player_type.gd" id="4_l7pl7"]
+[ext_resource type="Script" uid="uid://bn7rlmjkd1350" path="res://components/object/map_objects/lobby/gate.gd" id="5_lperp"]
+[ext_resource type="Texture2D" uid="uid://bpnliuxkwub06" path="res://assets/textures/white_grid.png" id="5_yo3ta"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_c13em"]
 
@@ -15,6 +18,13 @@ background_mode = 2
 sky = SubResource("Sky_c13em")
 tonemap_mode = 4
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_kifso"]
+size = Vector3(3, 4, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lperp"]
+albedo_texture = ExtResource("5_yo3ta")
+uv1_triplanar = true
+
 [node name="Lobby" type="Node3D" unique_id=1552981382]
 
 [node name="Environment" type="Node" parent="." unique_id=1229071838]
@@ -26,11 +36,12 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Environment" unique_id=1609268433]
 environment = SubResource("Environment_dka2y")
 
-[node name="PlayerSpawner" type="MultiplayerSpawner" parent="." unique_id=403005928 node_paths=PackedStringArray("spawn_points")]
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="." unique_id=403005928 node_paths=PackedStringArray("spawn_points", "group")]
 spawn_path = NodePath("../Players")
 script = ExtResource("1_kr2ft")
 player_scene = ExtResource("2_l7pl7")
 spawn_points = [NodePath("../Players/Spawnpoints/Spawnpoint1"), NodePath("../Players/Spawnpoints/Spawnpoint2"), NodePath("../Players/Spawnpoints/Spawnpoint3"), NodePath("../Players/Spawnpoints/Spawnpoint4")]
+group = NodePath("../Players")
 metadata/_custom_type_script = "uid://bimu02ie64wib"
 
 [node name="Players" type="Node3D" parent="." unique_id=2023989047]
@@ -49,7 +60,101 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2)
 [node name="Spawnpoint4" type="Marker3D" parent="Players/Spawnpoints" unique_id=891895510]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
 
-[node name="Ground" type="CSGBox3D" parent="." unique_id=1113562679]
+[node name="Map" type="Node3D" parent="." unique_id=2113433656]
+
+[node name="Ground" type="CSGBox3D" parent="Map" unique_id=1113562679]
 use_collision = true
-size = Vector3(250, 0.001, 250)
+size = Vector3(100, 0.001, 100)
 material = ExtResource("1_c13em")
+
+[node name="Ground5" type="CSGBox3D" parent="Map" unique_id=1832688878]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.22694, 0)
+use_collision = true
+size = Vector3(100, 0.001, 100)
+material = ExtResource("1_c13em")
+
+[node name="Ground2" type="CSGBox3D" parent="Map" unique_id=1500771840]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -8.331999, 4.2735276, 0.83380806)
+use_collision = true
+size = Vector3(22, 9.556152, 1)
+material = ExtResource("1_c13em")
+
+[node name="Ground4" type="CSGBox3D" parent="Map" unique_id=1879432548]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 8.666667, 4.2733765, 0.83333373)
+use_collision = true
+size = Vector3(22, 9.546753, 1)
+material = ExtResource("1_c13em")
+
+[node name="Ground3" type="CSGBox3D" parent="Map" unique_id=1522166467]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.16666651, 4.2855835, 11.333333)
+use_collision = true
+size = Vector3(16, 9.571167, 1)
+material = ExtResource("1_c13em")
+
+[node name="Ground6" type="CSGBox3D" parent="Map" unique_id=452410628]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1266274, 4.2253723, -8.480632)
+use_collision = true
+size = Vector3(3.0976563, 9.450745, 4.6279297)
+material = ExtResource("1_c13em")
+
+[node name="Ground7" type="CSGBox3D" parent="Map" unique_id=868852578]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.0584545, 4.2341003, -8.480632)
+use_collision = true
+size = Vector3(3.0976563, 9.468201, 4.6279297)
+material = ExtResource("1_c13em")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Map" unique_id=467357231]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0)
+light_energy = 4.632
+light_bake_mode = 1
+omni_range = 16.0
+
+[node name="Entities" type="Node3D" parent="." unique_id=236329930]
+
+[node name="ChangePlayerTypeArea" type="Area3D" parent="Entities" unique_id=2097437986]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -9.725754)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("4_l7pl7")
+metadata/_custom_type_script = "uid://b84358h0vp523"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Entities/ChangePlayerTypeArea" unique_id=928406667]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.017089844, 0)
+shape = SubResource("BoxShape3D_kifso")
+
+[node name="ChangePlayerTypeArea2" type="Area3D" parent="Entities" unique_id=1241446490]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.245495, 2, -9.725754)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("4_l7pl7")
+metadata/_custom_type_script = "uid://b84358h0vp523"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Entities/ChangePlayerTypeArea2" unique_id=2127479413]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.017089844, 0)
+shape = SubResource("BoxShape3D_kifso")
+
+[node name="ChangePlayerTypeArea3" type="Area3D" parent="Entities" unique_id=29250993]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.214634, 2, -9.725754)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("4_l7pl7")
+metadata/_custom_type_script = "uid://b84358h0vp523"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Entities/ChangePlayerTypeArea3" unique_id=1384275180]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.017089844, 0)
+shape = SubResource("BoxShape3D_kifso")
+
+[node name="Gate" type="Node3D" parent="Entities" unique_id=441364344]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10.60063)
+script = ExtResource("5_lperp")
+open_position = Vector3(0, 5, -10.60063)
+
+[node name="Ground3" type="CSGBox3D" parent="Entities/Gate" unique_id=2046406458]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+use_collision = true
+size = Vector3(18, 9.571167, 1)
+material = SubResource("StandardMaterial3D_lperp")
+
+[connection signal="player_entered" from="Entities/ChangePlayerTypeArea" to="Entities/Gate" method="_on_player_entered_change_player_type_area"]
+[connection signal="player_entered" from="Entities/ChangePlayerTypeArea2" to="Entities/Gate" method="_on_player_entered_change_player_type_area"]
+[connection signal="player_entered" from="Entities/ChangePlayerTypeArea3" to="Entities/Gate" method="_on_player_entered_change_player_type_area"]

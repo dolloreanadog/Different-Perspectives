@@ -56,7 +56,6 @@ signal got_player_type()
 
 func _ready() -> void:
 	Global.player = self
-	add_to_group("players")
 
 	prox_local.max_distance = max_distance
 	prox_local.stream.mix_rate = current_sample_rate
