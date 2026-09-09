@@ -1,12 +1,12 @@
 class_name NetworkManager extends Node
 
+
+
 enum PeerMode {
 	STEAM,
 	LOCAL,
 	NONE
 }
-
-
 
 var peer
 

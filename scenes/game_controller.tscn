@@ -7,16 +7,19 @@
 [ext_resource type="PackedScene" uid="uid://cl3jbmjvdq0xr" path="res://scenes/levels/lobby.tscn" id="5_e85df"]
 [ext_resource type="PackedScene" uid="uid://c0hrn5pe2ti1e" path="res://scenes/levels/main_menu.tscn" id="5_h843c"]
 [ext_resource type="PackedScene" uid="uid://besrfb02v4ttt" path="res://scenes/ui/server.tscn" id="6_burlk"]
+[ext_resource type="Script" uid="uid://bimu02ie64wib" path="res://components/managers/player_spawner.gd" id="7_d6ul8"]
+[ext_resource type="PackedScene" uid="uid://cmspe65yj5t6q" path="res://scenes/entities/player_controller.tscn" id="8_qtg6w"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_e85df"]
 font_color = Color(1, 0.172498, 0.208016, 1)
 
 [node name="GameController" type="Node" unique_id=1060063700]
 
-[node name="LobbyManager" type="Node" parent="." unique_id=615157697 node_paths=PackedStringArray("network_manager", "map_spawner", "map_manager", "menu_manager", "lobby_v_box_container")]
+[node name="LobbyManager" type="Node" parent="." unique_id=615157697 node_paths=PackedStringArray("network_manager", "map_spawner", "player_spawner", "map_manager", "menu_manager", "lobby_v_box_container")]
 script = ExtResource("1_rc0pn")
 network_manager = NodePath("../NetworkManager")
 map_spawner = NodePath("../MapSpawner")
+player_spawner = NodePath("../PlayerSpawner")
 map_manager = NodePath("../MapManager")
 menu_manager = NodePath("../MenuManager")
 lobby_v_box_container = NodePath("../CanvasLayer/Control/PublicMultiplayerMenu/Panel/ScrollContainer/MarginContainer/VBoxContainer")
@@ -49,6 +52,13 @@ metadata/_custom_type_script = "uid://busevdy2omq1l"
 
 [node name="MapSpawner" type="MultiplayerSpawner" parent="." unique_id=1995891200]
 spawn_path = NodePath("../MapContainer")
+
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1956647556 node_paths=PackedStringArray("group")]
+spawn_path = NodePath("../Players")
+script = ExtResource("7_d6ul8")
+player_scene = ExtResource("8_qtg6w")
+group = NodePath("../Players")
+metadata/_custom_type_script = "uid://bimu02ie64wib"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1806022422]
 
@@ -256,6 +266,8 @@ size_flags_vertical = 3
 [node name="MapContainer" type="Node" parent="." unique_id=1804631234]
 
 [node name="MainMenu" parent="MapContainer" unique_id=1605577905 instance=ExtResource("5_h843c")]
+
+[node name="Players" type="Node3D" parent="." unique_id=896444302]
 
 [connection signal="pressed" from="CanvasLayer/Control/MainMenu/VBoxContainer/SingleplayerButton" to="MenuManager" method="_on_singleplayer_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/MainMenu/VBoxContainer/MultiplayerButton" to="MenuManager" method="_on_multiplayer_button_pressed"]

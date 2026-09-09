@@ -18,4 +18,8 @@ func spawn_map(data):
 	var map = (load(data) as PackedScene).instantiate()
 	print_rich("Map ", data, " [b]Loaded[/b]")
 	current_map = map
+	for players: PlayerController in get_tree().get_nodes_in_group("players"):
+		var marker: Node = get_tree().get_first_node_in_group("SpawnPoints")
+		if is_instance_valid(marker):
+			players.global_position = marker.global_position
 	return map

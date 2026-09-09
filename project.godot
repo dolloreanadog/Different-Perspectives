@@ -46,6 +46,7 @@ enabled=PackedStringArray("res://addons/yard/plugin.cfg")
 [global_group]
 
 players=""
+SpawnPoints=""
 
 [input]
 

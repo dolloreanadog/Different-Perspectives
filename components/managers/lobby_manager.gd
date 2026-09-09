@@ -3,6 +3,7 @@ class_name LobbyManager extends Node
 ## INFO: Export variables
 @export var network_manager: NetworkManager
 @export var map_spawner: MultiplayerSpawner
+@export var player_spawner: PlayerSpawner
 @export var map_manager: MapManager
 @export var menu_manager: MenuManager
 
@@ -78,6 +79,7 @@ func setup_steam_lobbies():
 #region Creation Methods
 func create_singleplayer_lobby():
 	map_spawner.spawn(map_manager.lobby_scene_path)
+	player_spawner.spawn_host()
 	on_singleplayer_lobby_created.emit()
 
 func create_local_lobby():
@@ -87,6 +89,7 @@ func create_local_lobby():
 		if err != OK: print(err)
 		network_manager.update_multiplayer_peer()
 		map_spawner.spawn(map_manager.lobby_scene_path)
+		player_spawner.spawn_host()
 		on_local_lobby_created.emit()
 
 func create_steam_lobby():
@@ -95,6 +98,7 @@ func create_steam_lobby():
 		Steam.createLobby(Steam.LobbyType.LOBBY_TYPE_PUBLIC, SteamManager.lobby_members_max)
 		network_manager.update_multiplayer_peer()
 		map_spawner.spawn(map_manager.lobby_scene_path)
+		player_spawner.spawn_host()
 		on_steam_lobby_created.emit()
 #endregion
 

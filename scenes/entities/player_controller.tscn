@@ -133,19 +133,19 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, -1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0)
 
 [node name="Skeleton3D" parent="Head/drone/Armature_001" parent_id_path=PackedInt32Array(986905730, 414657065) index="0" unique_id=592822892]
-bones/1/rotation = Quaternion(4.264606e-10, 0.9960934, 8.548288e-08, 0.088306986)
+bones/1/rotation = Quaternion(4.2905945e-09, 0.4589814, 3.9388922e-08, 0.888446)
 
 [node name="Bone_002" parent="Head/drone/Armature_001/Skeleton3D" index="0" unique_id=560799949]
-transform = Transform3D(-0.98440367, -3.8202696e-08, 0.17592394, 1.5947053e-08, 0.9999998, 3.0638824e-07, -0.17592394, 3.044152e-07, -0.98440367, -0.15752223, 0.23708552, 0.8814346)
+transform = Transform3D(0.5786721, -1.7710256e-07, 0.81556, 7.392842e-08, 0.9999998, 1.6469937e-07, -0.81556, -3.5013862e-08, 0.5786721, -0.7302521, 0.2370857, -0.5181428)
 
 [node name="Bone_003" parent="Head/drone/Armature_001/Skeleton3D" index="1" unique_id=719383079]
-transform = Transform3D(-0.98440367, -3.9887023e-08, 0.17592394, 1.5947053e-08, 0.9999998, 3.1596238e-07, -0.17592394, 3.1384005e-07, -0.98440367, 1.1704339, 0.23708558, 0.17825422)
+transform = Transform3D(0.5786721, -1.8491087e-07, 0.81556, 7.392842e-08, 0.9999998, 1.7427354e-07, -0.81556, -4.0554163e-08, 0.5786721, -0.6600608, 0.23708552, 0.9828578)
 
 [node name="Bone_004" parent="Head/drone/Armature_001/Skeleton3D" index="2" unique_id=577796674]
-transform = Transform3D(-0.98440367, -3.8202696e-08, 0.17592394, 1.5947053e-08, 0.9999998, 3.0638824e-07, -0.17592394, 3.044152e-07, -0.98440367, 0.19409618, 0.2370857, -1.1403427)
+transform = Transform3D(0.5786721, -1.7710256e-07, 0.81556, 7.392842e-08, 0.9999998, 1.6469937e-07, -0.81556, -3.5013862e-08, 0.5786721, 0.94888467, 0.23708558, 0.6615681)
 
 [node name="Bone_005" parent="Head/drone/Armature_001/Skeleton3D" index="3" unique_id=188343105]
-transform = Transform3D(-0.98440367, -3.9910418e-08, 0.17592394, 1.5947053e-08, 0.9999998, 3.160954e-07, -0.17592394, 3.1397096e-07, -0.98440367, -1.1365762, 0.23708558, -0.20494649)
+transform = Transform3D(0.5786721, -1.8501933e-07, 0.81556, 7.392842e-08, 0.9999998, 1.7440652e-07, -0.81556, -4.063112e-08, 0.5786721, 0.6697786, 0.23708564, -0.9408532)
 
 [node name="ProxNetwork" type="AudioStreamPlayer3D" parent="." unique_id=305826201]
 unique_name_in_owner = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=4 uid="uid://c0hrn5pe2ti1e"]
+[gd_scene format=4 uid="uid://c0hrn5pe2ti1e"]
 
 [ext_resource type="Material" uid="uid://bbap35vkl2kcg" path="res://resources/materials/ground_grid.tres" id="1_fsby3"]
 [ext_resource type="PackedScene" uid="uid://ctfl6mj3hac3q" path="res://assets/models/character.blend" id="2_keln3"]
@@ -543,28 +543,28 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 
-[node name="MainMenu" type="Node3D"]
+[node name="MainMenu" type="Node3D" unique_id=755554024]
 
-[node name="Environment" type="Node" parent="."]
+[node name="Environment" type="Node" parent="." unique_id=1196420095]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment" unique_id=1623445561]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
 shadow_enabled = true
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment" unique_id=816236939]
 environment = SubResource("Environment_fsby3")
 
-[node name="Ground" type="CSGBox3D" parent="."]
+[node name="Ground" type="CSGBox3D" parent="." unique_id=1569352711]
 use_collision = true
 size = Vector3(250, 0.001, 250)
 material = ExtResource("1_fsby3")
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1639546001]
 transform = Transform3D(-0.947757, -0.0341623, 0.317157, 0, 0.994249, 0.107095, -0.318992, 0.1015, -0.942307, 0.421683, 1.62883, -3.27853)
 current = true
 fov = 30.0
 
-[node name="humanoid" parent="." instance=ExtResource("2_keln3")]
+[node name="humanoid" parent="." unique_id=493858459 instance=ExtResource("2_keln3")]
 transform = Transform3D(-0.95424, 0, 0.299041, 0, 1, 0, -0.299041, 0, -0.95424, -1.395, 0, 0)
 
 [node name="Skeleton3D" parent="humanoid/Armature" index="0"]
@@ -719,7 +719,7 @@ mesh = SubResource("ArrayMesh_cwj7k")
 surface_material_override/0 = ExtResource("5_cn35j")
 
 [node name="AnimationPlayer" parent="humanoid" index="1"]
-autoplay = "idle"
+autoplay = &"idle"
 playback_default_blend_time = 0.1
 
 [editable path="humanoid"]
