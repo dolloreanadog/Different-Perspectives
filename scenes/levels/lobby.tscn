@@ -106,6 +106,7 @@ omni_range = 16.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -9.725754)
 collision_layer = 2
 collision_mask = 2
+input_ray_pickable = false
 script = ExtResource("4_l7pl7")
 metadata/_custom_type_script = "uid://b84358h0vp523"
 
@@ -117,6 +118,7 @@ shape = SubResource("BoxShape3D_l7pl7")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.245495, 2, -9.725754)
 collision_layer = 2
 collision_mask = 2
+input_ray_pickable = false
 script = ExtResource("4_l7pl7")
 player_type = 1
 metadata/_custom_type_script = "uid://b84358h0vp523"
@@ -129,6 +131,7 @@ shape = SubResource("BoxShape3D_yo3ta")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.214634, 2, -9.725754)
 collision_layer = 2
 collision_mask = 2
+input_ray_pickable = false
 script = ExtResource("4_l7pl7")
 player_type = 2
 metadata/_custom_type_script = "uid://b84358h0vp523"
@@ -157,16 +160,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8652351, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -10.606443)
 collision_layer = 2
 collision_mask = 2
+input_ray_pickable = false
 monitorable = false
 script = ExtResource("5_h8nri")
 force = Vector3(0, 0, -1)
-magnitude = 0.1
+magnitude = 0.5
 metadata/_custom_type_script = "uid://n0jy00xapxsh"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Entities/PushAreas/PushArea3D" unique_id=98759214]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 2)
 shape = SubResource("BoxShape3D_btpay")
+disabled = true
 
 [connection signal="player_entered" from="Entities/ChangePlayerTypeArea" to="Entities/Gate" method="_on_player_entered_change_player_type_area"]
 [connection signal="player_entered" from="Entities/ChangePlayerTypeArea2" to="Entities/Gate" method="_on_player_entered_change_player_type_area"]
 [connection signal="player_entered" from="Entities/ChangePlayerTypeArea3" to="Entities/Gate" method="_on_player_entered_change_player_type_area"]
+[connection signal="gate_closed" from="Entities/Gate" to="Entities/PushAreas/PushArea3D" method="disable"]
+[connection signal="gate_opened" from="Entities/Gate" to="Entities/PushAreas/PushArea3D" method="enable"]

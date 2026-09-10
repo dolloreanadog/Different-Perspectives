@@ -6,6 +6,9 @@ var closed_position: Vector3
 @export var switch_time: float = 1
 var is_open: bool
 
+signal gate_opened()
+signal gate_closed()
+
 func _ready() -> void:
 	closed_position = global_position
 	
@@ -42,8 +45,10 @@ func _open_gate(value: bool) -> void:
 	is_open = value
 	if value:
 		get_tree().create_tween().tween_property(self, "global_position", open_position, switch_time)
+		gate_opened.emit()
 	else:
 		get_tree().create_tween().tween_property(self, "global_position", closed_position, switch_time)
+		gate_closed.emit()
 
 
 func _on_player_entered_change_player_type_area() -> void:
