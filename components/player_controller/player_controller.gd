@@ -16,6 +16,7 @@ class_name PlayerController extends CharacterBody3D
 @export var horizontal_decay: float = 1.0
 ## The higher it is the fast it decays, the lower it is the slower it decays
 @export var vertical_decay: float = 1.0
+@export var force_move_decay: float = 1.0
 
 @export_category("Camera")
 @export var camera_sensitivity: float = 0.1
@@ -28,6 +29,7 @@ var horizontal_input_dir: Vector2 = Vector2.ZERO
 var vertical_input_dir: float
 var input_smoothed: Vector2 = Vector2.ZERO
 var direction: Vector3 = Vector3.ZERO
+var force_move_direction: Vector3 = Vector3.ZERO
 
 #region Proximity Variables
 var current_sample_rate: int = 4800
@@ -111,19 +113,31 @@ func get_speed() -> float:
 func handle_horizontal_movement(delta: float) -> void:
 	direction = lerp(direction, (transform.basis * Vector3(horizontal_input_dir.x, vertical_input_dir, horizontal_input_dir.y)).normalized(), delta * acceleration)
 	if direction:
-		velocity.x = direction.x * move_speed
-		velocity.z = direction.z * move_speed
-		velocity.y = direction.y * move_speed
+		velocity.x = (direction.x + force_move_direction.x) * move_speed
+		velocity.z = (direction.z + force_move_direction.z) * move_speed
+		velocity.y = (direction.y + force_move_direction.y) * move_speed
 	else:
 		velocity.x = move_toward(velocity.x, 0, delta * horizontal_decay)
 		velocity.z = move_toward(velocity.z, 0, delta * horizontal_decay)
 		velocity.y = move_toward(velocity.y, 0, delta * horizontal_decay)
-	
-	
+
+
 func handle_vertical_movement(delta: float) -> void:
 	
 	velocity.y = move_toward(velocity.y, 0, delta * vertical_decay)
 	#velocity += get_gravity() * delta
+
+
+func force_move(move_direction: Vector3, magnitude: float) -> void:
+	var move: Vector3 = move_direction.normalized()
+	force_move_direction.x = move.x * magnitude
+	force_move_direction.z = move.z * magnitude
+	force_move_direction.y = move.y * magnitude
+
+func settle_force_move_direction(delta: float) -> void:
+	force_move_direction.x = move_toward(force_move_direction.x, 0, delta * force_move_decay)
+	force_move_direction.z = move_toward(force_move_direction.z, 0, delta * force_move_decay)
+	force_move_direction.y = move_toward(force_move_direction.y, 0, delta * force_move_decay)
 
 func _physics_process(delta: float) -> void:
 	if !is_multiplayer_authority(): return
@@ -140,16 +154,8 @@ func _physics_process(delta: float) -> void:
 	input_smoothed = lerp(input_smoothed, horizontal_input_dir, delta * 10.0)
 	animation_tree.set("parameters/walking_direction_blend_space/blend_position", input_smoothed)
 	
-	
 	handle_horizontal_movement(delta)
-	#handle_vertical_movement(delta)
-	#if is_on_floor():
-		#
-			#
-		#handle_movement(delta)
-	#else:
-		#handle_gravity(delta)
-
+	settle_force_move_direction(delta)
 	move_and_slide()
 
 func _process(_delta: float) -> void:

@@ -24,14 +24,14 @@ func _check_can_pass() -> bool:
 		match player.player_type_selected:
 			PlayerController.PlayerType.PLAYER1:
 				player_1_amount += 1
-			PlayerController.PlayerType.PLAYER1:
+			PlayerController.PlayerType.PLAYER2:
 				player_2_amount += 1
-			PlayerController.PlayerType.PLAYER1:
+			PlayerController.PlayerType.PLAYER3:
 				player_3_amount += 1
 			_:
 				push_error("Not a valid player type")
 	
-	if player_1_amount == 1 and player_2_amount == 1 and player_3_amount == 3:
+	if player_1_amount == 1 and player_2_amount == 1 and player_3_amount == 1:
 		print("Can pass")
 		return true
 	else:
