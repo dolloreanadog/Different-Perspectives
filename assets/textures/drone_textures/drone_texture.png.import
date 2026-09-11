@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dj3d263q71j6y"
-path.s3tc="res://.godot/imported/drone_texture.png-ccba1f38b6fe7a495459c3952ab1b4fc.s3tc.ctex"
+path.s3tc="res://.godot/imported/drone_texture.png-b8d0339bc3b93d1eb1ea7535a52bb793.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/textures/drone_texture.png"
-dest_files=["res://.godot/imported/drone_texture.png-ccba1f38b6fe7a495459c3952ab1b4fc.s3tc.ctex"]
+source_file="res://assets/textures/drone_textures/drone_texture.png"
+dest_files=["res://.godot/imported/drone_texture.png-b8d0339bc3b93d1eb1ea7535a52bb793.s3tc.ctex"]
 
 [params]
 

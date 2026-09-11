@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://de23fqn3k068w"]
 
 [ext_resource type="PackedScene" uid="uid://beb3r4sh0jrx2" path="res://assets/models/drone.glb" id="1_xm3as"]
-[ext_resource type="Texture2D" uid="uid://dj3d263q71j6y" path="res://assets/textures/drone_texture.png" id="2_hmbqr"]
+[ext_resource type="Texture2D" uid="uid://dj3d263q71j6y" path="res://assets/textures/drone_textures/drone_texture.png" id="2_hmbqr"]
 [ext_resource type="Material" uid="uid://c464pv56j2sdp" path="res://resources/materials/drone/drone_material.tres" id="3_uf2y5"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7d4xc"]
@@ -59,9 +59,11 @@ surface_material_override/0 = SubResource("StandardMaterial3D_7d4xc")
 surface_material_override/0 = SubResource("StandardMaterial3D_7d4xc")
 
 [node name="Sphere" parent="Armature_001/Skeleton3D/Bone" parent_id_path=PackedInt32Array(1127611412) index="3" unique_id=1642169828]
+unique_name_in_owner = true
 surface_material_override/0 = SubResource("StandardMaterial3D_wsj1m")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="." index="2" unique_id=1103339204]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, -1, -8.742278e-08, 0, 8.742278e-08, -1, 0, 0, 0.1890248)
 light_energy = 2.0
 spot_range = 32.65125

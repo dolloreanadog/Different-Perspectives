@@ -7,6 +7,12 @@ class_name PlayerController extends CharacterBody3D
 @onready var prox_local: AudioStreamPlayer3D = %ProxLocal
 @onready var animation_tree: AnimationTree = %AnimationTree
 
+@onready var sphere: MeshInstance3D = $Head/drone/Armature_001/Skeleton3D/Bone/Sphere
+@onready var spot_light_3d: SpotLight3D = $Head/drone/SpotLight3D
+const PLAYER_1 = preload("uid://cen0wu6cqqxys")
+const PLAYER_2 = preload("uid://dyn7c2ne0ic7y")
+const PLAYER_3 = preload("uid://d3ox8p267qljn")
+
 @export_category("Movement")
 @export var move_speed: float = 5.0
 @export var acceleration: float = 15.0
@@ -43,9 +49,10 @@ var packet_read_limit: int = 5
 var player_name: String = "Larry"
 var steam_id: int = 0
 
-var player_type_selected: PlayerType:
+@export var player_type_selected: PlayerType:
 	set(value):
 		player_type_selected = value
+		_update_player_type()
 		got_player_type.emit()
 
 enum PlayerType {
@@ -75,10 +82,15 @@ func _ready() -> void:
 	if is_multiplayer_authority():
 		player_name = SteamManager.steam_username
 		steam_id = SteamManager.steam_id
-
+	
 		for child in %WorldModel.find_children("*", "VisualInstance3D"):
 			child.set_layer_mask_value(1, false)
 			child.set_layer_mask_value(20, true)
+	
+	var node: Node = get_tree().get_first_node_in_group("SpawnPoints")
+	if is_instance_valid(node):
+		global_position = node.global_position
+	
 	else:
 		if multiplayer.multiplayer_peer is SteamMultiplayerPeer:
 			var peer: SteamMultiplayerPeer = multiplayer.multiplayer_peer
@@ -121,6 +133,28 @@ func handle_horizontal_movement(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0, delta * horizontal_decay)
 		velocity.y = move_toward(velocity.y, 0, delta * horizontal_decay)
 
+
+func _update_player_type() -> void:
+	match player_type_selected:
+		PlayerType.PLAYER1:
+			sphere.material_override = PLAYER_1
+			spot_light_3d.light_color = Color.YELLOW
+		PlayerType.PLAYER2:
+			sphere.material_override = PLAYER_2
+			spot_light_3d.light_color = Color.WHITE
+		PlayerType.PLAYER3:
+			sphere.material_override = PLAYER_3
+			spot_light_3d.light_color = Color.TURQUOISE
+
+
+func init_player_type() -> void:
+	if multiplayer.is_server():
+		for player: PlayerController in get_tree().get_nodes_in_group("players"):
+			player.init_set_player_type.rpc(player.player_type_selected)
+
+@rpc("any_peer", "call_remote", "reliable")
+func init_set_player_type(type: PlayerType) -> void:
+	player_type_selected = type
 
 func handle_vertical_movement(delta: float) -> void:
 	

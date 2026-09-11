@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bpnliuxkwub06" path="res://assets/textures/white_grid.png" id="2_l4ht0"]
 [ext_resource type="Material" uid="uid://bbap35vkl2kcg" path="res://resources/materials/ground_grid.tres" id="3_7rbyl"]
 [ext_resource type="PackedScene" uid="uid://de23fqn3k068w" path="res://scenes/entities/drone_body.tscn" id="4_hwjx1"]
+[ext_resource type="Material" uid="uid://cen0wu6cqqxys" path="res://assets/textures/drone_textures/player_1.tres" id="5_riij3"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_7rbyl"]
 properties/0/path = NodePath(".:position")
@@ -133,19 +134,22 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, -1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0)
 
 [node name="Skeleton3D" parent="Head/drone/Armature_001" parent_id_path=PackedInt32Array(986905730, 414657065) index="0" unique_id=592822892]
-bones/1/rotation = Quaternion(4.2905945e-09, 0.4589814, 3.9388922e-08, 0.888446)
+bones/1/rotation = Quaternion(2.8467662e-09, 0.8077868, 6.932275e-08, 0.58947486)
 
 [node name="Bone_002" parent="Head/drone/Armature_001/Skeleton3D" index="0" unique_id=560799949]
-transform = Transform3D(0.5786721, -1.7710256e-07, 0.81556, 7.392842e-08, 0.9999998, 1.6469937e-07, -0.81556, -3.5013862e-08, 0.5786721, -0.7302521, 0.2370857, -0.5181428)
+transform = Transform3D(-0.30503884, -2.0680491e-07, 0.9523397, 8.632717e-08, 0.9999998, 2.4480553e-07, -0.9523397, 1.5688802e-07, -0.30503884, -0.8527246, 0.23708558, 0.27313167)
 
 [node name="Bone_003" parent="Head/drone/Armature_001/Skeleton3D" index="1" unique_id=719383079]
-transform = Transform3D(0.5786721, -1.8491087e-07, 0.81556, 7.392842e-08, 0.9999998, 1.7427354e-07, -0.81556, -4.0554163e-08, 0.5786721, -0.6600608, 0.23708552, 0.9828578)
+transform = Transform3D(-0.30503884, -2.1592277e-07, 0.9523397, 8.632717e-08, 0.9999998, 2.543797e-07, -0.9523397, 1.5980851e-07, -0.30503884, 0.39000812, 0.23708546, 1.1178478)
 
 [node name="Bone_004" parent="Head/drone/Armature_001/Skeleton3D" index="2" unique_id=577796674]
-transform = Transform3D(0.5786721, -1.7710256e-07, 0.81556, 7.392842e-08, 0.9999998, 1.6469937e-07, -0.81556, -3.5013862e-08, 0.5786721, 0.94888467, 0.23708558, 0.6615681)
+transform = Transform3D(-0.30503884, -2.0680491e-07, 0.9523397, 8.632717e-08, 0.9999998, 2.4480553e-07, -0.9523397, 1.5688802e-07, -0.30503884, 1.0986636, 0.23708564, -0.36192936)
 
 [node name="Bone_005" parent="Head/drone/Armature_001/Skeleton3D" index="3" unique_id=188343105]
-transform = Transform3D(0.5786721, -1.8501933e-07, 0.81556, 7.392842e-08, 0.9999998, 1.7440652e-07, -0.81556, -4.063112e-08, 0.5786721, 0.6697786, 0.23708564, -0.9408532)
+transform = Transform3D(-0.30503884, -2.1604941e-07, 0.9523397, 8.632717e-08, 0.9999998, 2.5451268e-07, -0.9523397, 1.5984908e-07, -0.30503884, -0.3505775, 0.2370857, -1.1004106)
+
+[node name="Sphere" parent="Head/drone/Armature_001/Skeleton3D/Bone" parent_id_path=PackedInt32Array(986905730, 1127611412) index="3" unique_id=1642169828]
+surface_material_override/0 = ExtResource("5_riij3")
 
 [node name="ProxNetwork" type="AudioStreamPlayer3D" parent="." unique_id=305826201]
 unique_name_in_owner = true
