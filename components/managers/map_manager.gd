@@ -3,6 +3,7 @@ class_name MapManager extends Node
 @export var menu_scene: Node
 @export var lobby_map: PackedScene
 @export var lobby_scene_path: String = "res://Scenes/level.tscn"
+@export var level_select_panel: Panel
 var current_map: Node
 
 func _ready() -> void:
@@ -12,7 +13,7 @@ func _ready() -> void:
 # The data parameter is expected to be a string representing the path to the map scene.
 # If a current map exists, it is freed before spawning the new one.
 # Returns the newly spawned map instance.
-func spawn_map(data):
+func spawn_map(data: String):
 	if current_map != null:
 		current_map.queue_free()
 	var map = (load(data) as PackedScene).instantiate()

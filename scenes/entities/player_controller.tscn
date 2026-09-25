@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://21cbqbixuik3" path="res://components/player_controller/player_controller.gd" id="1_opoyq"]
 [ext_resource type="Texture2D" uid="uid://bpnliuxkwub06" path="res://assets/textures/white_grid.png" id="2_l4ht0"]
 [ext_resource type="Material" uid="uid://bbap35vkl2kcg" path="res://resources/materials/ground_grid.tres" id="3_7rbyl"]
+[ext_resource type="Script" uid="uid://dxdfhsj278s0b" path="res://components/player_controller/interact_ray_cast_3d.gd" id="4_gsftu"]
 [ext_resource type="PackedScene" uid="uid://de23fqn3k068w" path="res://scenes/entities/drone_body.tscn" id="4_hwjx1"]
 [ext_resource type="Material" uid="uid://cen0wu6cqqxys" path="res://assets/textures/drone_textures/player_1.tres" id="5_riij3"]
 
@@ -130,23 +131,39 @@ cull_mask = 524287
 [node name="AudioListener" type="AudioListener3D" parent="Head/Camera" unique_id=855418785]
 unique_name_in_owner = true
 
+[node name="InteractRayCast3D" type="RayCast3D" parent="Head/Camera" unique_id=1087804775 node_paths=PackedStringArray("player_controller", "object_position")]
+unique_name_in_owner = true
+target_position = Vector3(0, 0, -5)
+collision_mask = 4
+script = ExtResource("4_gsftu")
+player_controller = NodePath("../../..")
+object_position = NodePath("../HoldMarker3D")
+influence_min_range = 0.1
+rotation_speed = 1.0
+rot_influence_min_range = 0.5
+rotation_time = 0.75
+cooldown = 0.1
+
+[node name="HoldMarker3D" type="Marker3D" parent="Head/Camera" unique_id=637702602]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.0233839)
+
 [node name="drone" parent="Head" unique_id=986905730 instance=ExtResource("4_hwjx1")]
 transform = Transform3D(1, 0, 0, 0, -1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0)
 
 [node name="Skeleton3D" parent="Head/drone/Armature_001" parent_id_path=PackedInt32Array(986905730, 414657065) index="0" unique_id=592822892]
-bones/1/rotation = Quaternion(2.8467662e-09, 0.8077868, 6.932275e-08, 0.58947486)
+bones/1/rotation = Quaternion(4.414629e-09, 0.40542233, 3.4792585e-08, 0.9141295)
 
 [node name="Bone_002" parent="Head/drone/Armature_001/Skeleton3D" index="0" unique_id=560799949]
-transform = Transform3D(-0.30503884, -2.0680491e-07, 0.9523397, 8.632717e-08, 0.9999998, 2.4480553e-07, -0.9523397, 1.5688802e-07, -0.30503884, -0.8527246, 0.23708558, 0.27313167)
+transform = Transform3D(0.6712653, -1.609586e-07, 0.74121684, 6.718941e-08, 0.9999998, 1.5630603e-07, -0.74121684, -5.5120893e-08, 0.6712653, -0.66368526, 0.2370857, -0.60105073)
 
 [node name="Bone_003" parent="Head/drone/Armature_001/Skeleton3D" index="1" unique_id=719383079]
-transform = Transform3D(-0.30503884, -2.1592277e-07, 0.9523397, 8.632717e-08, 0.9999998, 2.543797e-07, -0.9523397, 1.5980851e-07, -0.30503884, 0.39000812, 0.23708546, 1.1178478)
+transform = Transform3D(0.6712653, -1.6805515e-07, 0.74121684, 6.718941e-08, 0.9999998, 1.658802e-07, -0.74121684, -6.15477e-08, 0.6712653, -0.77191097, 0.23708552, 0.8976877)
 
 [node name="Bone_004" parent="Head/drone/Armature_001/Skeleton3D" index="2" unique_id=577796674]
-transform = Transform3D(-0.30503884, -2.0680491e-07, 0.9523397, 8.632717e-08, 0.9999998, 2.4480553e-07, -0.9523397, 1.5688802e-07, -0.30503884, 1.0986636, 0.23708564, -0.36192936)
+transform = Transform3D(0.6712653, -1.609586e-07, 0.74121684, 6.718941e-08, 0.9999998, 1.5630603e-07, -0.74121684, -5.5120893e-08, 0.6712653, 0.86377543, 0.23708552, 0.7693806)
 
 [node name="Bone_005" parent="Head/drone/Armature_001/Skeleton3D" index="3" unique_id=188343105]
-transform = Transform3D(-0.30503884, -2.1604941e-07, 0.9523397, 8.632717e-08, 0.9999998, 2.5451268e-07, -0.9523397, 1.5984908e-07, -0.30503884, -0.3505775, 0.2370857, -1.1004106)
+transform = Transform3D(0.6712653, -1.6815372e-07, 0.74121684, 6.718941e-08, 0.9999998, 1.6601318e-07, -0.74121684, -6.163697e-08, 0.6712653, 0.77658117, 0.23708564, -0.85482734)
 
 [node name="Sphere" parent="Head/drone/Armature_001/Skeleton3D/Bone" parent_id_path=PackedInt32Array(986905730, 1127611412) index="3" unique_id=1642169828]
 surface_material_override/0 = ExtResource("5_riij3")

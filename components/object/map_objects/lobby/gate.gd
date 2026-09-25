@@ -46,10 +46,19 @@ func _open_gate(value: bool) -> void:
 	if value:
 		get_tree().create_tween().tween_property(self, "global_position", open_position, switch_time)
 		gate_opened.emit()
-	else:
+	else: # TODO: We can crash the game if we move to another level when this happens
 		get_tree().create_tween().tween_property(self, "global_position", closed_position, switch_time)
 		gate_closed.emit()
 
 
 func _on_player_entered_change_player_type_area() -> void:
 	_open_gate(_check_can_pass())
+
+
+func _on_change_player_type_area_player_entered_time(time_amount: float) -> void:
+	if _check_can_pass():
+		_open_gate(true)
+		await get_tree().create_timer(time_amount).timeout
+		_open_gate(false)
+	else:
+		_open_gate(false)

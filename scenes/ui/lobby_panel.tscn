@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cuc3wf8opcg7e"]
 
-[ext_resource type="PackedScene" uid="uid://bpf3qt3tvy6lr" path="res://scenes/ui/level_button.tscn" id="1_8yhjr"]
+[ext_resource type="PackedScene" uid="uid://beplc6j5rx7ww" path="res://scenes/ui/level_select_panel.tscn" id="1_8yhjr"]
 
 [node name="StartingUI" type="Control" unique_id=159579889]
 layout_mode = 3
@@ -36,23 +36,5 @@ offset_right = 1088.0
 offset_bottom = 576.0
 text = "Choose Level"
 
-[node name="LevelSelectPanel" type="Panel" parent="." unique_id=202786321]
-layout_mode = 0
-offset_left = 1152.0
-offset_right = 2304.0
-offset_bottom = 648.0
-
-[node name="ScrollContainer" type="ScrollContainer" parent="LevelSelectPanel" unique_id=720398720]
-layout_mode = 0
-offset_left = 64.0
-offset_top = 64.0
-offset_right = 1088.0
-offset_bottom = 576.0
-
-[node name="LevelGridContainer" type="GridContainer" parent="LevelSelectPanel/ScrollContainer" unique_id=131036827]
-unique_name_in_owner = true
-layout_mode = 2
-columns = 8
-
-[node name="LevelButton" parent="." unique_id=888527585 instance=ExtResource("1_8yhjr")]
+[node name="LevelSelectPanel" parent="." unique_id=497079406 instance=ExtResource("1_8yhjr")]
 layout_mode = 0

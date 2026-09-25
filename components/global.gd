@@ -2,6 +2,14 @@ extends Node
 
 @export var player: PlayerController
 
+# Manager Lists
+var map_manager: MapManager
+var menu_manager: MenuManager
+var network_manger: NetworkManager
+var lobby_manger: LobbyManager
+var map_spawner: MultiplayerSpawner
+var game_controller: Node
+
 func get_player_from_steam_id(id: int) -> PlayerController:
 	var players: Array[Node] = get_tree().get_nodes_in_group("players")
 	var selected_player: PlayerController

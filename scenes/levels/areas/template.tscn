@@ -1,12 +1,25 @@
 [gd_scene format=3 uid="uid://da6uyvht8cpfd"]
 
 [ext_resource type="Material" uid="uid://bbap35vkl2kcg" path="res://resources/materials/ground_grid.tres" id="1_wki5q"]
+[ext_resource type="Script" uid="uid://d3ji1p1reaiks" path="res://components/object/hide_object.gd" id="2_7scpi"]
+[ext_resource type="Script" uid="uid://dgnuclbef3wh8" path="res://components/object/check_interactable.gd" id="3_d4wc7"]
+[ext_resource type="Script" uid="uid://c204jwof8iwp8" path="res://components/object/map_objects/interactable_rigid_body_3d.gd" id="3_n4hbb"]
+[ext_resource type="Script" uid="uid://b8bpfj2usbksc" path="res://components/object/map_objects/interactable_button_3d.gd" id="4_wdked"]
+[ext_resource type="Script" uid="uid://ct6kf4p3oxwyx" path="res://components/object/map_objects/debug_message.gd" id="5_pufa7"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kifso"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_wdked"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_pufa7"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_kifso"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_kifso"]
+
 [node name="Template" type="Node3D" unique_id=1304483127]
 
-[node name="SpawnPoint" type="Marker3D" parent="." unique_id=311319530]
+[node name="SpawnPoint" type="Marker3D" parent="." unique_id=311319530 groups=["SpawnPoints"]]
 
 [node name="Area3D" type="Area3D" parent="." unique_id=298346338]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.8432713, 0.5520966, 0)
@@ -18,3 +31,45 @@ shape = SubResource("BoxShape3D_kifso")
 use_collision = true
 size = Vector3(250, 0.001, 250)
 material = ExtResource("1_wki5q")
+
+[node name="Ground10" type="CSGBox3D" parent="." unique_id=815543941]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.16666651, 1, -4.6551304)
+use_collision = true
+size = Vector3(16, 3, 1)
+material = ExtResource("1_wki5q")
+
+[node name="HideObject" type="Node" parent="Ground10" unique_id=1899967746]
+script = ExtResource("2_7scpi")
+metadata/_custom_type_script = "uid://d3ji1p1reaiks"
+
+[node name="InteractableRigidBody3D" type="RigidBody3D" parent="." unique_id=533468569]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7274461, -2.3247457)
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("3_n4hbb")
+
+[node name="CheckInteractable" type="CollisionShape3D" parent="InteractableRigidBody3D" unique_id=445718559]
+shape = SubResource("BoxShape3D_wdked")
+script = ExtResource("3_d4wc7")
+metadata/_custom_type_script = "uid://dgnuclbef3wh8"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="InteractableRigidBody3D" unique_id=791316937]
+mesh = SubResource("BoxMesh_pufa7")
+
+[node name="InteractableButton3D" type="StaticBody3D" parent="." unique_id=695419408]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9256562, 3.998236)
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("4_wdked")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractableButton3D" unique_id=127876531]
+shape = SubResource("SphereShape3D_kifso")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="InteractableButton3D" unique_id=223925852]
+mesh = SubResource("SphereMesh_kifso")
+
+[node name="Node" type="Node" parent="InteractableButton3D" unique_id=1051411147]
+script = ExtResource("5_pufa7")
+text = "Button Pressed"
+
+[connection signal="pressed" from="InteractableButton3D" to="InteractableButton3D/Node" method="_say"]

@@ -6,6 +6,7 @@ class_name PlayerController extends CharacterBody3D
 @onready var prox_network: AudioStreamPlayer3D = %ProxNetwork
 @onready var prox_local: AudioStreamPlayer3D = %ProxLocal
 @onready var animation_tree: AnimationTree = %AnimationTree
+@onready var interact_ray_cast_3d: InteractRayCast3D = %InteractRayCast3D
 
 @onready var sphere: MeshInstance3D = $Head/drone/Armature_001/Skeleton3D/Bone/Sphere
 @onready var spot_light_3d: SpotLight3D = $Head/drone/SpotLight3D
@@ -49,9 +50,12 @@ var packet_read_limit: int = 5
 var player_name: String = "Larry"
 var steam_id: int = 0
 
+var player_type: PlayerType
 @export var player_type_selected: PlayerType:
+	get():
+		return player_type
 	set(value):
-		player_type_selected = value
+		player_type = value
 		_update_player_type()
 		got_player_type.emit()
 
@@ -64,7 +68,9 @@ enum PlayerType {
 signal got_player_type()
 
 func _ready() -> void:
-	Global.player = self
+	
+	# TODO: I think I see an issue where It gets from latest player for only the host
+	# TODO: We need to actually give it to the correct person and not give latest spawned character to host
 
 	prox_local.max_distance = max_distance
 	prox_local.stream.mix_rate = current_sample_rate
@@ -80,9 +86,12 @@ func _ready() -> void:
 	audio_listener.current = is_multiplayer_authority()
 
 	if is_multiplayer_authority():
+		push_warning("Can the person see this")
 		player_name = SteamManager.steam_username
 		steam_id = SteamManager.steam_id
-	
+		Global.player = self # Put over here so it doesn't get given to host over, and have clients have a go
+		# TODO: This still isn't given to the client that owns it
+		
 		for child in %WorldModel.find_children("*", "VisualInstance3D"):
 			child.set_layer_mask_value(1, false)
 			child.set_layer_mask_value(20, true)
@@ -110,6 +119,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			rotate_y(deg_to_rad(-event.relative.x * camera_sensitivity))
 			head.rotate_x(deg_to_rad(-event.relative.y * camera_sensitivity))
 			head.rotation.x = clamp(head.rotation.x, deg_to_rad(-89), deg_to_rad(89))
+		# INFO: It will show two, but that is because we're having these two methods
+		if Input.is_action_just_pressed("interact_1"): 
+			interact_ray_cast_3d.pick_up(interact_ray_cast_3d.get_object())
+			interact_ray_cast_3d.press_button(interact_ray_cast_3d.get_object())
 
 func _input(_event: InputEvent) -> void:
 	if !is_multiplayer_authority(): return

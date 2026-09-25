@@ -1,7 +1,11 @@
 [gd_resource type="Resource" script_class="MapInfo" format=3 uid="uid://dix3xj7lysscu"]
 
 [ext_resource type="Script" uid="uid://bpbwjgqvftdk" path="res://components/resource/map_info.gd" id="1_74387"]
+[ext_resource type="PackedScene" uid="uid://da6uyvht8cpfd" path="res://scenes/levels/areas/template.tscn" id="1_xjd02"]
 
 [resource]
 script = ExtResource("1_74387")
+level_id = 1
+map = ExtResource("1_xjd02")
+map_name = "Test"
 metadata/_custom_type_script = "uid://bpbwjgqvftdk"

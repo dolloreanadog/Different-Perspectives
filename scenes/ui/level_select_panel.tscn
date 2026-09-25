@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://beplc6j5rx7ww"]
+
+[ext_resource type="PackedScene" uid="uid://bpf3qt3tvy6lr" path="res://scenes/ui/level_button.tscn" id="1_25xvp"]
+[ext_resource type="Resource" uid="uid://dix3xj7lysscu" path="res://resources/maps/test_level.tres" id="2_hsckv"]
+
+[node name="LevelSelectPanel" type="Panel" unique_id=497079406]
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=626539821]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 1088.0
+offset_bottom = 576.0
+
+[node name="LevelGridContainer" type="GridContainer" parent="ScrollContainer" unique_id=117126112]
+unique_name_in_owner = true
+layout_mode = 2
+columns = 8
+
+[node name="LevelButton" parent="ScrollContainer/LevelGridContainer" unique_id=888527585 instance=ExtResource("1_25xvp")]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+map = ExtResource("2_hsckv")

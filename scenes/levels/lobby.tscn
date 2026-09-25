@@ -5,6 +5,9 @@
 [ext_resource type="Script" uid="uid://n0jy00xapxsh" path="res://components/object/map_objects/push_area_3d.gd" id="5_h8nri"]
 [ext_resource type="Script" uid="uid://bn7rlmjkd1350" path="res://components/object/map_objects/lobby/gate.gd" id="5_lperp"]
 [ext_resource type="Texture2D" uid="uid://bpnliuxkwub06" path="res://assets/textures/white_grid.png" id="5_yo3ta"]
+[ext_resource type="Script" uid="uid://dc441mo43rnps" path="res://components/object/map_objects/lobby/open_change_menu.gd" id="6_lperp"]
+[ext_resource type="Script" uid="uid://c204jwof8iwp8" path="res://components/object/map_objects/interactable_rigid_body_3d.gd" id="7_e1nvq"]
+[ext_resource type="Script" uid="uid://dgnuclbef3wh8" path="res://components/object/check_interactable.gd" id="8_tqhma"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_c13em"]
 
@@ -16,6 +19,17 @@ radiance_size = 2
 background_mode = 2
 sky = SubResource("Sky_c13em")
 tonemap_mode = 4
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_e1nvq"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:is_picked_up")
+properties/2/spawn = true
+properties/2/replication_mode = 1
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_l7pl7"]
 size = Vector3(3, 4, 1)
@@ -31,7 +45,14 @@ albedo_texture = ExtResource("5_yo3ta")
 uv1_triplanar = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_btpay"]
-size = Vector3(17, 5, 5)
+size = Vector3(17, 5, 5.328125)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lperp"]
+size = Vector3(3, 2.4744873, 2.5551758)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mi0gr"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_e4iki"]
 
 [node name="Lobby" type="Node3D" unique_id=1552981382]
 
@@ -47,31 +68,37 @@ environment = SubResource("Environment_dka2y")
 [node name="Map" type="Node3D" parent="." unique_id=2113433656]
 
 [node name="Ground" type="CSGBox3D" parent="Map" unique_id=1113562679]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49243164, 0, 0.9770508)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49243164, 0, -5.3720703)
 use_collision = true
-size = Vector3(19.769043, 0.001, 24.301758)
+size = Vector3(19.769043, 0.001, 37)
 material = ExtResource("1_c13em")
 
 [node name="Ground5" type="CSGBox3D" parent="Map" unique_id=1832688878]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.22694, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.359436, 9.22694, -13.780029)
 use_collision = true
-size = Vector3(100, 0.001, 100)
+size = Vector3(42.356567, 0.001, 72.43994)
 material = ExtResource("1_c13em")
 
 [node name="Ground2" type="CSGBox3D" parent="Map" unique_id=1500771840]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -8.331999, 4.2735276, 0.83380806)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -8.331999, 4.2735276, -6.166192)
 use_collision = true
-size = Vector3(22, 9.556152, 1)
+size = Vector3(36, 9.556152, 1)
 material = ExtResource("1_c13em")
 
 [node name="Ground4" type="CSGBox3D" parent="Map" unique_id=1879432548]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 8.666667, 4.2733765, 0.83333373)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 8.666667, 4.2733765, -6.166666)
 use_collision = true
-size = Vector3(22, 9.546753, 1)
+size = Vector3(36, 9.546753, 1)
 material = ExtResource("1_c13em")
 
 [node name="Ground3" type="CSGBox3D" parent="Map" unique_id=1522166467]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.16666651, 4.2855835, 11.333333)
+use_collision = true
+size = Vector3(16, 9.571167, 1)
+material = ExtResource("1_c13em")
+
+[node name="Ground9" type="CSGBox3D" parent="Map" unique_id=567468439]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.16666651, 4.2855835, -23.666668)
 use_collision = true
 size = Vector3(16, 9.571167, 1)
 material = ExtResource("1_c13em")
@@ -102,12 +129,17 @@ omni_range = 16.0
 
 [node name="Entities" type="Node3D" parent="." unique_id=236329930]
 
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="Entities" unique_id=894431279]
+root_path = NodePath("../InteractableRigidBody3D")
+replication_config = SubResource("SceneReplicationConfig_e1nvq")
+
 [node name="ChangePlayerTypeArea" type="Area3D" parent="Entities" unique_id=2097437986]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -9.725754)
 collision_layer = 2
 collision_mask = 2
 input_ray_pickable = false
 script = ExtResource("4_l7pl7")
+time = 2.0
 metadata/_custom_type_script = "uid://b84358h0vp523"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Entities/ChangePlayerTypeArea" unique_id=928406667]
@@ -121,6 +153,7 @@ collision_mask = 2
 input_ray_pickable = false
 script = ExtResource("4_l7pl7")
 player_type = 1
+time = 2.0
 metadata/_custom_type_script = "uid://b84358h0vp523"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Entities/ChangePlayerTypeArea2" unique_id=2127479413]
@@ -134,6 +167,7 @@ collision_mask = 2
 input_ray_pickable = false
 script = ExtResource("4_l7pl7")
 player_type = 2
+time = 2.0
 metadata/_custom_type_script = "uid://b84358h0vp523"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Entities/ChangePlayerTypeArea3" unique_id=1384275180]
@@ -168,12 +202,38 @@ magnitude = 0.5
 metadata/_custom_type_script = "uid://n0jy00xapxsh"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Entities/PushAreas/PushArea3D" unique_id=98759214]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1.8359375)
 shape = SubResource("BoxShape3D_btpay")
 disabled = true
 
-[connection signal="player_entered" from="Entities/ChangePlayerTypeArea" to="Entities/Gate" method="_on_player_entered_change_player_type_area"]
-[connection signal="player_entered" from="Entities/ChangePlayerTypeArea2" to="Entities/Gate" method="_on_player_entered_change_player_type_area"]
+[node name="OpenChangeMenu" type="Area3D" parent="Entities" unique_id=2047908599]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -17)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("6_lperp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Entities/OpenChangeMenu" unique_id=1670886248]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, -1.3137817, -1.1120605)
+shape = SubResource("BoxShape3D_lperp")
+
+[node name="InteractableRigidBody3D" type="RigidBody3D" parent="Entities" unique_id=1488199906]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7274461, -2.3247457)
+collision_layer = 5
+collision_mask = 5
+script = ExtResource("7_e1nvq")
+
+[node name="CheckInteractable" type="CollisionShape3D" parent="Entities/InteractableRigidBody3D" unique_id=1525182913]
+shape = SubResource("BoxShape3D_mi0gr")
+script = ExtResource("8_tqhma")
+metadata/_custom_type_script = "uid://dgnuclbef3wh8"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Entities/InteractableRigidBody3D" unique_id=897972614]
+mesh = SubResource("BoxMesh_e4iki")
+
+[connection signal="player_entered_time" from="Entities/ChangePlayerTypeArea" to="Entities/Gate" method="_on_change_player_type_area_player_entered_time"]
+[connection signal="player_entered_time" from="Entities/ChangePlayerTypeArea2" to="Entities/Gate" method="_on_change_player_type_area_player_entered_time"]
 [connection signal="player_entered" from="Entities/ChangePlayerTypeArea3" to="Entities/Gate" method="_on_player_entered_change_player_type_area"]
+[connection signal="player_entered_time" from="Entities/ChangePlayerTypeArea3" to="Entities/Gate" method="_on_change_player_type_area_player_entered_time"]
 [connection signal="gate_closed" from="Entities/Gate" to="Entities/PushAreas/PushArea3D" method="disable"]
 [connection signal="gate_opened" from="Entities/Gate" to="Entities/PushAreas/PushArea3D" method="enable"]
+[connection signal="body_entered" from="Entities/OpenChangeMenu" to="Entities/OpenChangeMenu" method="_on_body_entered"]

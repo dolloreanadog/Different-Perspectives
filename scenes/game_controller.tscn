@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://dctiktpqyar4l"]
 
+[ext_resource type="Script" uid="uid://dksvhuvshsn3k" path="res://components/managers/game_controller.gd" id="1_qtg6w"]
 [ext_resource type="Script" uid="uid://bqrnoubyb5xyt" path="res://components/managers/lobby_manager.gd" id="1_rc0pn"]
 [ext_resource type="Script" uid="uid://djqwyk1iv2mw3" path="res://components/managers/network_manager.gd" id="2_h843c"]
 [ext_resource type="Script" uid="uid://dnirqbsrgss6i" path="res://components/managers/menu_manager.gd" id="3_e85df"]
@@ -9,13 +10,16 @@
 [ext_resource type="PackedScene" uid="uid://besrfb02v4ttt" path="res://scenes/ui/server.tscn" id="6_burlk"]
 [ext_resource type="Script" uid="uid://bimu02ie64wib" path="res://components/managers/player_spawner.gd" id="7_d6ul8"]
 [ext_resource type="PackedScene" uid="uid://cmspe65yj5t6q" path="res://scenes/entities/player_controller.tscn" id="8_qtg6w"]
+[ext_resource type="PackedScene" uid="uid://beplc6j5rx7ww" path="res://scenes/ui/level_select_panel.tscn" id="10_1awvl"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_e85df"]
 font_color = Color(1, 0.172498, 0.208016, 1)
 
 [node name="GameController" type="Node" unique_id=1060063700]
+script = ExtResource("1_qtg6w")
 
 [node name="LobbyManager" type="Node" parent="." unique_id=615157697 node_paths=PackedStringArray("network_manager", "map_spawner", "player_spawner", "map_manager", "menu_manager", "lobby_v_box_container")]
+unique_name_in_owner = true
 script = ExtResource("1_rc0pn")
 network_manager = NodePath("../NetworkManager")
 map_spawner = NodePath("../MapSpawner")
@@ -26,10 +30,12 @@ lobby_v_box_container = NodePath("../CanvasLayer/Control/PublicMultiplayerMenu/P
 metadata/_custom_type_script = "uid://bqrnoubyb5xyt"
 
 [node name="NetworkManager" type="Node" parent="." unique_id=2125101028]
+unique_name_in_owner = true
 script = ExtResource("2_h843c")
 metadata/_custom_type_script = "uid://djqwyk1iv2mw3"
 
 [node name="MenuManager" type="Node" parent="." unique_id=463438773 node_paths=PackedStringArray("main_canvas", "main_menu", "multiplayer_select_menu", "local_multiplayer_menu", "public_multiplayer_menu", "mic_select", "restart_prompt", "lobby_manager", "network_manager")]
+unique_name_in_owner = true
 script = ExtResource("3_e85df")
 server_panel = ExtResource("6_burlk")
 main_canvas = NodePath("../CanvasLayer")
@@ -43,14 +49,17 @@ lobby_manager = NodePath("../LobbyManager")
 network_manager = NodePath("../NetworkManager")
 metadata/_custom_type_script = "uid://dnirqbsrgss6i"
 
-[node name="MapManager" type="Node" parent="." unique_id=826922196 node_paths=PackedStringArray("menu_scene")]
+[node name="MapManager" type="Node" parent="." unique_id=826922196 node_paths=PackedStringArray("menu_scene", "level_select_panel")]
+unique_name_in_owner = true
 script = ExtResource("4_burlk")
 menu_scene = NodePath("../MapContainer/MainMenu")
 lobby_map = ExtResource("5_e85df")
 lobby_scene_path = "res://scenes/levels/lobby.tscn"
+level_select_panel = NodePath("../CanvasLayer2/LevelSelectPanel")
 metadata/_custom_type_script = "uid://busevdy2omq1l"
 
 [node name="MapSpawner" type="MultiplayerSpawner" parent="." unique_id=1995891200]
+unique_name_in_owner = true
 spawn_path = NodePath("../MapContainer")
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1956647556 node_paths=PackedStringArray("group")]
@@ -262,6 +271,11 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=1158620702]
+
+[node name="LevelSelectPanel" parent="CanvasLayer2" unique_id=497079406 instance=ExtResource("10_1awvl")]
+visible = false
 
 [node name="MapContainer" type="Node" parent="." unique_id=1804631234]
 
